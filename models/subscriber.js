@@ -9,6 +9,10 @@ const subscribersSchema = new mongoose.Schema({
         type: String,
         require: true
     },
+    lastName: {
+        type: String,
+        require: true
+    },
     birth_date: {
         type: String,
         require: true
