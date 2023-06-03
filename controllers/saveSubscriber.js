@@ -1,5 +1,5 @@
 // Requires model
-const saveSubscriberModel = require('../models/saveSubscriber.js');
+const subscriberModel = require('../models/subscriber.js');
 
 async function saveSubscriber(req, res, next) {
     res.header("Access-Control-Allow-Methods", 'GET,PUT,POST,DELETE');
@@ -22,6 +22,7 @@ async function saveSubscriber(req, res, next) {
     const {
         code,
         name,
+        lastName,
         birth_date,
         telephone,
         address,
@@ -41,6 +42,14 @@ async function saveSubscriber(req, res, next) {
     if (!name || (typeof name != 'string')) {
         console.log("controllers/saveSubscriber - missing name or wrong format");
         objReturn.error = "missing name or wrong format";
+        objReturn.resStatus = 400;
+        controllerReturn(objReturn, res);
+        return;
+    }
+
+    if (!lastName || (typeof lastName != 'string')) {
+        console.log("controllers/saveSubscriber - missing lastName or wrong format");
+        objReturn.error = "missing lastName or wrong format";
         objReturn.resStatus = 400;
         controllerReturn(objReturn, res);
         return;
@@ -99,12 +108,12 @@ async function saveSubscriber(req, res, next) {
         const subscriberObj = req.body;
 
         // Getting the new subscriber id
-        const maxMongoSubscriberID = await saveSubscriberModel.findOne({}).sort({ code: -1 });
+        const maxMongoSubscriberID = await subscriberModel.findOne({}).sort({ code: -1 });
         subscriberObj.id = maxMongoSubscriberID == null ? 1 : maxMongoSubscriberID.id + 1;
 
-        const createSubscriber = await saveSubscriberModel.create(subscriberObj);
+        const createSubscriberResult = await subscriberModel.create(subscriberObj);
 
-        objReturn.data = createSubscriber;
+        objReturn.data = createSubscriberResult;
         objReturn.resStatus = 201;
     } catch (err) {
         console.log("controllers/saveSubscriber - Error to create subscriber mongo document - ERROR: ", err);
