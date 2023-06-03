@@ -34,9 +34,12 @@ const subscribersSchema = new mongoose.Schema({
         require: true
     },
     status: {
-        type: String,
+        type: Boolean,
         require: true
     },
+    profileImage: {
+        type: Buffer
+    }
 });
 
 module.exports = mongoose.model('subscribers', subscribersSchema);
