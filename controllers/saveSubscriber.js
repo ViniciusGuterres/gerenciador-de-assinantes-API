@@ -29,6 +29,7 @@ async function saveSubscriber(req, res, next) {
         city,
         state,
         status,
+        profileImage
     } = req.body;
 
     if (!code) {
@@ -95,7 +96,7 @@ async function saveSubscriber(req, res, next) {
         return;
     }
 
-    if (!status || (typeof state != 'string')) {
+    if ((typeof status != 'boolean')) {
         console.log("controllers/saveSubscriber - missing status or wrong format");
         objReturn.error = "missing status or wrong format";
         objReturn.resStatus = 400;
