@@ -23,7 +23,7 @@ async function deleteSubscriber(req, res, next) {
 
     if (!id) {
         console.log("controllers/deleteSubscriber - missing req.id");
-        objReturn.error = "missing req.id";
+        objReturn.error = "missing req.params.id";
         objReturn.resStatus = 400;
         controllerReturn(objReturn, res);
         return;
@@ -31,7 +31,6 @@ async function deleteSubscriber(req, res, next) {
 
     try {
         const deleteSubscriberResult = await subscriberModel.deleteOne({ _id: id });
-        console.log("🚀 ~ file: deleteSubscriber.js:36 ~ deleteSubscriber ~ deleteSubscriberResult:", deleteSubscriberResult);
 
         objReturn.data = deleteSubscriberResult;
         objReturn.resStatus = 200;
