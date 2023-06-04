@@ -32,8 +32,8 @@ async function saveSubscriber(req, res, next) {
         profileImage
     } = req.body;
 
-    if (!code) {
-        console.log("controllers/saveSubscriber - missing code");
+    if (!code || (typeof code != 'number')) {
+        console.log("controllers/saveSubscriber - missing code or wrong format");
         objReturn.error = "missing code";
         objReturn.resStatus = 400;
         controllerReturn(objReturn, res);
@@ -56,7 +56,7 @@ async function saveSubscriber(req, res, next) {
         return;
     }
 
-    if (!birth_date) {
+    if (!birth_date || (typeof birth_date != 'string')) {
         console.log("controllers/saveSubscriber - missing birth_date");
         objReturn.error = "missing birth_date or wrong format";
         objReturn.resStatus = 400;
